@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: garage-db
+    environment:
+      POSTGRES_USER: garage_user
+      POSTGRES_PASSWORD: garage_password
+      POSTGRES_DB: garage_booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - garage-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: garage-backend
+    environment:
+      DATABASE_URL: postgresql://garage_user:garage_password@db:5432/garage_booking
+      JWT_SECRET: your-secret-key-change-in-production
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - garage-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: garage-frontend
+    environment:
+      VITE_API_URL: http://localhost:3000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - garage-network
+
+volumes:
+  postgres_data:
+
+networks:
+  garage-network:
+    driver: bridge
