@@ -44,6 +44,8 @@ Les professionnels peuvent :
 - Docker et Docker Compose installés
 - Node.js 18+ (pour développement local)
 
+> ⚠️ **Note de sécurité** : Les credentials dans `docker-compose.yml` sont des valeurs par défaut pour le développement local uniquement. En production, utilisez des variables d'environnement sécurisées.
+
 ### Lancement avec Docker
 
 ```bash
