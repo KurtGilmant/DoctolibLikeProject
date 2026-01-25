@@ -14,6 +14,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - garage-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U garage_user -d garage_booking"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -27,12 +32,14 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend:/app
       - /app/node_modules
     networks:
       - garage-network
+    command: sh -c "npx prisma db push --accept-data-loss && npm run dev"
 
   frontend:
     build:
@@ -40,7 +47,7 @@ services:
       dockerfile: Dockerfile
     container_name: garage-frontend
     environment:
-      VITE_API_URL: http://localhost:3000
+      VITE_API_URL: http://localhost:3000/api
     ports:
       - "5173:5173"
     depends_on:

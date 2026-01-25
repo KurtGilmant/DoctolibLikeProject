@@ -1,0 +1,17 @@
+{
+  "name": "garage-booking",
+  "version": "1.0.0",
+  "description": "Plateforme de prise de rendez-vous pour garages automobiles",
+  "scripts": {
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "docker:up": "docker-compose up --build",
+    "docker:down": "docker-compose down"
+  },
+  "keywords": ["garage", "booking", "vue", "express"],
+  "author": "",
+  "license": "MIT"
+}

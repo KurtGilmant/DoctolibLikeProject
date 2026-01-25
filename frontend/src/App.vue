@@ -10,7 +10,7 @@
             <template v-if="authStore.isAuthenticated">
               <router-link v-if="authStore.user?.role === 'PROFESSIONAL'" to="/pro/dashboard" class="text-gray-700 hover:text-blue-600">Dashboard Pro</router-link>
               <router-link v-else to="/bookings" class="text-gray-700 hover:text-blue-600">Mes RDV</router-link>
-              <button @click="authStore.logout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button>
+              <button @click="handleLogout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Déconnexion</button>
             </template>
             <template v-else>
               <router-link to="/login" class="text-gray-700 hover:text-blue-600">Connexion</router-link>
@@ -25,7 +25,14 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import { useAuthStore } from './stores/auth';
 
+const router = useRouter();
 const authStore = useAuthStore();
+
+const handleLogout = () => {
+  authStore.logout();
+  router.push('/');
+};
 </script>

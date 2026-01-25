@@ -49,6 +49,7 @@ const form = ref({ firstName: '', lastName: '', email: '', phone: '', password: 
 const error = ref('');
 
 const handleRegister = async () => {
+  error.value = '';
   try {
     await authStore.register({
       ...form.value,
@@ -56,7 +57,8 @@ const handleRegister = async () => {
     });
     router.push(form.value.isPro ? '/pro/dashboard' : '/');
   } catch (e) {
-    error.value = 'Erreur lors de l\'inscription';
+    error.value = e.response?.data?.error || 'Erreur lors de l\'inscription';
+    console.error('Registration error:', e);
   }
 };
 </script>
