@@ -17,7 +17,17 @@ export const register = async (req: Request, res: Response) => {
     });
 
     const token = generateToken(user.id, user.role);
-    res.status(201).json({ token, user: { id: user.id, email: user.email, role: user.role } });
+    res.status(201).json({ 
+      token, 
+      user: { 
+        id: user.id, 
+        email: user.email, 
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        role: user.role 
+      } 
+    });
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur' });
   }
@@ -38,7 +48,17 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = generateToken(user.id, user.role);
-    res.json({ token, user: { id: user.id, email: user.email, role: user.role } });
+    res.json({ 
+      token, 
+      user: { 
+        id: user.id, 
+        email: user.email, 
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        role: user.role 
+      } 
+    });
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur' });
   }

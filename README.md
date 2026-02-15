@@ -129,11 +129,3 @@ DoctolibLikeProject/
 ├── database-diagram.png
 └── README.md
 ```
-
-## 👥 Auteur
-
-[Votre nom]
-
-## 📝 Licence
-
-MIT
